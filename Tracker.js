@@ -26,17 +26,7 @@
             },
             sw: function () {
                 console.log("cc");
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/raju-gitlab/CDN/TrackerDataProcessor.js')
-                        .then(() => {
-                            console.log("Service Worker Registered");
-
-                            navigator.serviceWorker.ready.then(() => {
-                                console.log("Service Worker is ready to handle requests");
-                            });
-                        })
-                        .catch(err => console.error("Service Worker Registration Failed:", err));
-                }
+                
             },
             swp : function (url, method = "GET", body = null) {
                 if (navigator.serviceWorker.controller) {
