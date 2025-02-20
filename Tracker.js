@@ -8,7 +8,7 @@
             d: document,
             n: navigator,
             sTag: document.querySelector('script[src]'),
-            urlParams: new URLSearchParams(new URL(document.querySelector('script[src*="Screening.js"]').src).search),
+            urlParams: new URLSearchParams(new URL(document.querySelector('script[src*="Screening.js"]')?.src)?.search),
             i: null,
             j: JSON,
             c: '',
@@ -61,10 +61,8 @@
             init: async function (p) {
                 this.ld();
                 this.sw();
-                this.i = this.urlParams.get('id');
+                this.i = ""
                 if (!localStorage.getItem("TsToken")) {
-                    const token = await this.sourceToken();
-                    localStorage.setItem("TsToken", token);
                 }
 
                 console.log("Script initiated");
