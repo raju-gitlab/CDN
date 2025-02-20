@@ -13,7 +13,7 @@
             ld: function () {
                 if (window.jQuery === undefined) {
                     const sct = d.createElement("script");
-                    sct.src = "https://code.jquery.com/jquery-3.6.4.min.js";
+                    sct.src = "https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js";
                     sct.type = "text/javascript";
                     d.head.appendChild(sct);
                 }
@@ -25,7 +25,7 @@
             sw: function () {
                 console.log("cc");
                 if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('./TrackerDataProcessor.js')
+                    navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/raju-gitlab/CDN/TrackerDataProcessor.js')
                         .then(() => {
                             console.log("Service Worker Registered");
 
