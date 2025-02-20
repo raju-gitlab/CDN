@@ -8,7 +8,7 @@
             d: document,
             n: navigator,
             sTag: document.querySelector('script[src]'),
-            urlParams: new URLSearchParams(new URL(document.querySelector('script[src*="Screening.js"]')?.src)?.search),
+            urlParams: "",
             i: null,
             j: JSON,
             c: '',
