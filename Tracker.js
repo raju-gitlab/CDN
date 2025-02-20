@@ -64,7 +64,7 @@
                 const item = sessionStorage.getItem("_tkns")
             },
             Bcn: function (rs, dt) {
-                navigator.sendBeacon(`${this.APIURL}api/EventTracker/${rs}`, this.JSON.stringify({ "Data": this.JSON.stringify(dt) }));
+                navigator.sendBeacon(`${this.APIURL}api/Tracker/${rs}`, this.JSON.stringify({ "Data": this.JSON.stringify(dt) }));
             },
             mReq: async function (rs) {
                 try {
@@ -78,7 +78,7 @@
                 sessionStorage.setItem("_tkns", `${t}-${rs}-${JSON.stringify(dt)}`)
                 console.log(`Post request called : ${this.APIURL}`);
                 try {
-                    const resp = await fetch(`${this.APIURL}api/EventTracker/${rs}`, {
+                    const resp = await fetch(`${this.APIURL}api/Tracker/${rs}`, {
                         method: t,
                         headers: {
                             "Content-Type": "Application/json"
