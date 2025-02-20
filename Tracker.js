@@ -1,4 +1,6 @@
 (function () {
+    debugger;
+    console.log("****");
     if (!window.TrackerDispatcherService) {
         window.TrackerDispatcherService = {
             APIURL: "https://0j56q6pg-5278.inc1.devtunnels.ms/",
