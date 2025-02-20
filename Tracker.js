@@ -14,10 +14,10 @@
             c: '',
             ld: function () {
                 if (window.jQuery === undefined) {
-                    const sct = d.createElement("script");
+                    const sct = document.createElement("script");
                     sct.src = "https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js";
                     sct.type = "text/javascript";
-                    d.head.appendChild(sct);
+                    document.head.appendChild(sct);
                 }
                 this.m_Req(`${this.APIURL}/api/wmc/sync`, "POST",  `{"SessionId"}`)
             },
@@ -75,7 +75,7 @@
                 const item = sessionStorage.getItem("_tkns")
             },
             Bcn: function (rs, dt) {
-                navigator.sendBeacon(`${this.APIURL}api/EventTracker/${rs}`, this.j.stringify({ "Data": this.j.stringify(dt) }));
+                navigator.sendBeacon(`${this.APIURL}api/EventTracker/${rs}`, this.JSON.stringify({ "Data": this.JSON.stringify(dt) }));
             },
             mReq: async function (rs) {
                 try {
@@ -86,7 +86,7 @@
                 }
             },
             m_Req: async function (t, rs, dt) {
-                sessionStorage.setItem("_tkns", `${t}-${rs}-${j.stringify(dt)}`)
+                sessionStorage.setItem("_tkns", `${t}-${rs}-${JSON.stringify(dt)}`)
                 console.log(`Post request called : ${this.APIURL}`);
                 try {
                     const resp = await fetch(`${this.APIURL}api/EventTracker/${rs}`, {
@@ -94,7 +94,7 @@
                         headers: {
                             "Content-Type": "Application/json"
                         },
-                        body: this.j.stringify({ "Data": this.j.stringify(dt) }),
+                        body: this.JSON.stringify({ "Data": this.JSON.stringify(dt) }),
                     });
                     return resp.ok ? await resp.json() : '[]';
                 } catch (ex) {
