@@ -27,7 +27,7 @@
                 console.log("Tracker initiated");
             }
         };
-        window.Send = window.TrackerWorkerService.Send.bind(window.TrackerWorkerService);
+        window.TSend = window.TrackerWorkerService.TSend.bind(window.TrackerWorkerService);
         window.TrackerWorkerService.Init();
     }
 })();
