@@ -1,44 +1,90 @@
 (function () {
-    debugger;
-    console.log("****");
     if (!window.TrackerDispatcherService) {
         window.TrackerDispatcherService = {
             APIURL: "https://0j56q6pg-5278.inc1.devtunnels.ms/",
             w: window,
             d: document,
             n: navigator,
+            __t: '',
+            __eSk: '',
             sTag: document.querySelector('script[src]'),
-            urlParams: new URLSearchParams(new URL(document.querySelector('script[src*="Screening.js"]')?.src)?.search),
+            urlParams: new URLSearchParams(new URL(document.querySelector('script[src*="Tracker.js"]').src).search),
             i: null,
             j: JSON,
             c: '',
             ld: function () {
                 if (window.jQuery === undefined) {
-                    const sct = d.createElement("script");
+                    const sct = document.createElement("script");
                     sct.src = "https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js";
                     sct.type = "text/javascript";
-                    d.head.appendChild(sct);
+                    document.head.appendChild(sct);
                 }
-                this.m_Req(`${this.APIURL}/api/wmc/sync`, "POST",  `{"SessionId"}`)
+                this.m_Req(`${this.APIURL}/api/wmc/sync`, "POST", `{"SessionId"}`)
+            },
+            __lC : function() {
+                const sct = document.createElement("script");
+                sct.src = `./TrackerWorker.js?K=${this.__eSk}`;
+                sct.type = "text/javascript";
+                document.head.appendChild(sct);
             },
             encr: function (p) {
                 //encryption algorithm need to write
             },
             sw: function () {
-                console.log("cc");
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/raju-gitlab/CDN/TrackerDataProcessor.js')
-                        .then(() => {
-                            console.log("Service Worker Registered");
+                const __aId = this.urlParams.get('AppId');
 
-                            navigator.serviceWorker.ready.then(() => {
-                                console.log("Service Worker is ready to handle requests");
-                            });
-                        })
-                        .catch(err => console.error("Service Worker Registration Failed:", err));
+                if (__aId === undefined || __aId === null) {
+                    console.log("Error in configuration");
                 }
+                else {
+                    let __obj = new Object();
+                    __obj.A = __aId;
+                    __obj.K = this.__t;
+                    fetch(`${this.APIURL}api/Tracker/ValidCredentials`, {
+                        body: JSON.stringify(__obj),
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'content-type': 'application/json'
+                        }
+                    }).then(res => {
+                        if (res.status === 200) {
+                            return res.json();
+                        }
+                    })
+                    .then(response => {
+                        this.__eSk = response.apiResponse;
+                        sessionStorage.setItem('__aId', this.__aId);
+                        this.__lC();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                }
+                // if ('serviceWorker' in navigator) {
+                //     navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/raju-gitlab/CDN/TrackerDataProcessor.js')
+                //         .then(() => {
+                //             console.log("Service Worker Registered");
+
+                //             navigator.serviceWorker.ready.then(() => {
+                //                 console.log("Service Worker is ready to handle requests");
+                //             });
+                //         })
+                //         .catch(err => console.error("Service Worker Registration Failed:", err));
+                // }
+                // fetch('https://cdn.jsdelivr.net/gh/raju-gitlab/CDN/TrackerDataProcessor.js', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Accept': 'application/json',
+                //         'Authorization': 'Bearer your_token_here'
+                //     }
+                // })
+                //     .then(() => {
+                //         console.log("Service Worker Registered");
+                //     })
+                //     .catch(err => console.error("Service Worker Registration Failed:", err));
             },
-            swp : function (url, method = "GET", body = null) {
+            swp: function (url, method = "GET", body = null) {
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
                         action: "fetchData",
@@ -59,13 +105,14 @@
                 });
             },
             init: async function (p) {
-                this.ld();
-                this.sw();
-                this.i = ""
-                if (!localStorage.getItem("TsToken")) {
+                if (p != undefined && p != null) {
+                    this.__t = p;
+                    this.ld();
+                    this.sw();
                 }
-
-                console.log("Script initiated");
+                else {
+                    console.log("Error in configiration");
+                }
             },
             sourceToken: async function () {
                 console.log("Source token called");
@@ -86,10 +133,10 @@
                 }
             },
             m_Req: async function (t, rs, dt) {
-                sessionStorage.setItem("_tkns", `${t}-${rs}-${j.stringify(dt)}`)
+                sessionStorage.setItem("_tkns", `${t}-${rs}-${JSON.stringify(dt)}`)
                 console.log(`Post request called : ${this.APIURL}`);
                 try {
-                    const resp = await fetch(`${this.APIURL}api/EventTracker/${rs}`, {
+                    const resp = await fetch(`${this.APIURL}api/Tracker/${rs}`, {
                         method: t,
                         headers: {
                             "Content-Type": "Application/json"
@@ -106,7 +153,7 @@
                 await this.m_Req("POST", "Push", data)
             },
             ap_init: function (a) {
-                if (a != undefined && a != null && a.length != 0){
+                if (a != undefined && a != null && a.length != 0) {
                     const _d = a.toString().split(',');
 
                 }
@@ -122,6 +169,6 @@
         window.ld = window.TrackerDispatcherService.ld.bind(window.TrackerDispatcherService);
         window.swp = window.TrackerDispatcherService.swp.bind(window.TrackerDispatcherService);
         window.ap_init = window.TrackerDispatcherService.ap_init.bind(window.TrackerDispatcherService);
-        window.TrackerDispatcherService.init();
+        window.TrackerDispatcherService.init.bind(window.TrackerDispatcherService);
     }
 })();
