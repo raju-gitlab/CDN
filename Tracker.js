@@ -23,7 +23,7 @@
             },
             __lC : function() {
                 const sct = document.createElement("script");
-                sct.src = `./TrackerWorker.js?K=${this.__eSk}`;
+                sct.src = `https://cdn.jsdelivr.net/gh/raju-gitlab/CDN@1.4.1/TrackerWorker.js?K=${this.__eSk}`;
                 sct.type = "text/javascript";
                 document.head.appendChild(sct);
             },
@@ -149,7 +149,6 @@
                 }
             },
             PostData: async function (event, data) {
-                console.log("printedprintedprintedprintedprintedprintedprintedprintedprintedprintedprintedprinted");
                 await this.m_Req("POST", "Push", data)
             },
             ap_init: function (a) {
