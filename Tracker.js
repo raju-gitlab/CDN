@@ -142,7 +142,6 @@
                         this.__eSk = response.apiResponse;
                         localStorage.setItem('__aId', this.urlParams.get('AppId'));
                         localStorage.setItem('__eSk', this.__eSk);
-                        this.__lC();
                     }).catch((err) => {
                         this.__valid = false;
                         console.log(err);
