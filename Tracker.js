@@ -238,13 +238,13 @@
                     return '[]';
                 }
             },
-            PostData: async function (event, tagname, data) {
+            PostData: async function (event, data, tagname) {
                 if (this.__valid) {
                     //(url, method = "GET", body = null)
                     // this.swp('endpoint', 'POST', data);
 
                     if ('serviceWorker' in navigator) {
-                        this.swp('Tracker/Post', 'POST', data);
+                        this.swp('Tracker/Post', 'POST', data, tagname);
                     }
                     else {
                         this.m_Req(`${this.APIURL}/api/wmc/sync`, "POST", `{"SessionId"}`);
