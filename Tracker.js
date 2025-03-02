@@ -142,17 +142,17 @@
                         this.__eSk = response.apiResponse;
                         localStorage.setItem('__aId', this.urlParams.get('AppId'));
                         localStorage.setItem('__eSk', this.__eSk);
-                        this.__lC();
                     }).catch((err) => {
                         this.__valid = false;
                         console.log(err);
                     })
                 }
             },
-            swp: function (url, method = "GET", body = null) {
+            swp: function (url, method = "GET", body = null, tagname = null) {
                 if (navigator.serviceWorker.controller) {
                     let __eObject = new Object();
                     __eObject.id = this.__suid();
+                    __eObject.tagName = tagname; 
                     if (typeof(body) != 'string') {
                         __eObject.data = JSON.stringify(body);
                     }
@@ -238,7 +238,7 @@
                     return '[]';
                 }
             },
-            PostData: async function (event, data) {
+            PostData: async function (event, tagname, data) {
                 if (this.__valid) {
                     //(url, method = "GET", body = null)
                     // this.swp('endpoint', 'POST', data);
@@ -279,7 +279,7 @@
             detectBrowser() {
                 var userAgent = navigator.userAgent;
                 if (userAgent.indexOf("Edg") > -1) {
-                    return "Microsoft Edge";
+                    return "MicrosoftEdge";
                 } else if (userAgent.indexOf("Chrome") > -1) {
                     return "Chrome";
                 } else if (userAgent.indexOf("Firefox") > -1) {
@@ -289,7 +289,7 @@
                 } else if (userAgent.indexOf("Opera") > -1) {
                     return "Opera";
                 } else if (userAgent.indexOf("Trident") > -1 || userAgent.indexOf("MSIE") > -1) {
-                    return "Internet Explorer";
+                    return "InternetExplorer";
                 }
 
                 return "Unknown";
@@ -304,12 +304,12 @@
                     return "Tablet";
                 }
                 if (/smart-tv|apple-tv|google-tv|hbbtv|netcast|viera|webos|tv/i.test(userAgent)) {
-                    return "Smart TV";
+                    return "SmartTV";
                 }
                 if (/macintosh|windows nt|linux|x11/i.test(userAgent)) {
                     return "Desktop";
                 }
-                return "Unknown Device";
+                return "UnknownDevice";
             },
             IsEmail : function(mailId) {
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
